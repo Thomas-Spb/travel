@@ -8,7 +8,7 @@ export const timer = () => {
   const heroText = document.querySelector('.hero__text ');
   const heroTimer = document.querySelector('.hero__timer');
   const timerBlock = document.querySelector('.timer');
-  timerBlock.dataset.timerDeadline = '2024/04/20 09:19';
+  timerBlock.dataset.timerDeadline = '2024/04/19 09:19';
 
   const getTimeRemaining = () => {
     const currentTime = Date.now();
