@@ -1,8 +1,10 @@
-const choiceData = () => {
+const choiceData = async () => {
   const dateSelects = document.querySelectorAll('select[name="dates"]');
   const peopleSelects = document.querySelectorAll('select[name="people"]');
   const reservationData = document.querySelector('.reservation__data');
   const reservationPrice = document.querySelector('.reservation__price');
+  reservationData.textContent = '';
+  reservationPrice.textContent = '';
   let price = 0;
   //   const data = [];
 
@@ -15,32 +17,28 @@ const choiceData = () => {
     return data;
   };
 
-  let data = fetchData();
+  let data = await fetchData();
   console.log('data: ', data);
 
-  const totalPrice = () => {
+  const totalPrice = (date, count) => {
     // console.log('totalPrice');
-    reservationData.textContent = `${dateSelects[1].value},
-        ${peopleSelects[1].value}`;
+    // reservationData.textContent = `${dateSelects[1].value},
+    //     ${peopleSelects[1].value} человек`;
     reservationPrice.textContent = `$${+peopleSelects[1].value * price}`;
   };
 
-  const renderDateOptions = async (selector, data) => {
-    console.log('data: ', data);
-
+  const renderDateOptions = async selector => {
     data.forEach(item => {
       const option = document.createElement('option');
       option.value = item.date;
       option.textContent = option.value;
       selector.append(option);
       price = item.price;
-      totalPrice();
     });
   };
 
   //Рендер кол-во человек в зависимости от даты
-  const renderPeopleOptions = async (selector, index, data) => {
-    // console.log('data: ', data);
+  const renderPeopleOptions = async (selector, index) => {
     // selector.innerHTML = 'Выбрать дату';
     // const data = await fetchData();
     data.forEach(item => {
@@ -56,22 +54,25 @@ const choiceData = () => {
     });
   };
 
-  dateSelects.forEach((item, idx, data) => {
-    renderDateOptions(item, data);
+  dateSelects.forEach(item => {
+    renderDateOptions(item);
   });
 
-  peopleSelects.forEach((item, id, data) => {
-    renderPeopleOptions(item, id, data);
+  peopleSelects.forEach((item, id) => {
+    renderPeopleOptions(item, id);
   });
 
   dateSelects.forEach((item, index) => [
     item.addEventListener('input', () => {
-      totalPrice();
+      //   totalPrice();
       renderPeopleOptions(peopleSelects[index], index);
+      reservationData.textContent = `${dateSelects[1].value}`;
     }),
   ]);
 
   peopleSelects[1].addEventListener('input', () => {
+    reservationData.textContent = `${dateSelects[1].value},
+        ${peopleSelects[1].value} человек`;
     totalPrice();
   });
 
