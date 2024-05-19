@@ -43,10 +43,12 @@ const choiceData = async () => {
     // const data = await fetchData();
     data.forEach(item => {
       if (dateSelects[index].value === item.date) {
+        peopleSelects[index].textContent = '';
         for (let i = item['min-people']; i <= item['max-people']; i++) {
           const option = document.createElement('option');
           option.value = i;
           option.textContent = option.value;
+
           peopleSelects[index].append(option);
           price = item.price;
         }
