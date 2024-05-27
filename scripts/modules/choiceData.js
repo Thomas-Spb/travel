@@ -13,18 +13,13 @@ const choiceData = async () => {
   const fetchData = async () => {
     const result = await fetch('db.json');
     const data = await result.json();
-    console.log('data: ', data);
     return data;
   };
 
   let data = await fetchData();
-  console.log('data: ', data);
 
   const totalPrice = (date, count) => {
-    // console.log('totalPrice');
-    // reservationData.textContent = `${dateSelects[1].value},
-    //     ${peopleSelects[1].value} человек`;
-    reservationPrice.textContent = `$${+peopleSelects[1].value * price}`;
+    reservationPrice.textContent = `${+peopleSelects[1].value * price} ₽`;
   };
 
   const renderDateOptions = async selector => {
